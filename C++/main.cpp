@@ -1,6 +1,7 @@
 #include<vector>
 #include "july.h"
 #include<iostream>
+#include "jianzhi.h"
 
 using namespace std;
 int main() {
