@@ -195,7 +195,7 @@ public:
 };
 
 
-//Custom Sort String
+//791 Custom Sort String
 class Solution791 {
 public:
     struct order_info
@@ -341,4 +341,29 @@ public:
         }
         return pos;
     }
+};
+
+//384 Shuffle an Array
+class Solution384 {
+public:
+    Solution384(vector<int>& nums) {
+        original_nums = nums;
+    }
+
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        return original_nums;
+    }
+
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() {
+        vector<int> shuffle_nums(original_nums.begin(), original_nums.end());
+        for (int i = shuffle_nums.size() - 1; i >= 0; i--) {
+            int r = std::rand() % (i + 1);
+            swap(shuffle_nums[i], shuffle_nums[r]);
+        }
+        return shuffle_nums;
+    }
+private:
+    vector<int> original_nums;
 };

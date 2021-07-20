@@ -2,6 +2,7 @@
 #include<vector>
 #include<string>
 #include<sstream>
+#include<stack>
 
 //剑指 Offer 20. 表示数值的字符串
 class Solution_jianzhi20 {
@@ -141,3 +142,133 @@ public:
         return count;
     }
 };
+
+//剑指 Offer 17. 打印从1到最大的n位数
+class Solution_jianzhi17 {
+public:
+    vector<int> printNumbers(int n) {
+        int max_value = pow(10, n);
+        vector<int> ans;
+        for (int i = 1; i < n; i++) 
+        {
+            ans.push_back(i);
+        }
+        return ans;
+    }
+};
+
+
+//剑指 Offer 24. 反转链表
+class Solution_jianzhi24 {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        ListNode* temp = NULL;
+        while (curr)
+        {
+            temp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        return prev;
+    }
+};
+
+//剑指 Offer 18. 删除链表的节点
+class Solution_jianzhi18 {
+public:
+    ListNode* deleteNode(ListNode* head, int val) {
+        if (head->val == val) return head->next;
+        ListNode* prev = head;
+        ListNode* curr = head->next;
+        while (curr)
+        {
+            if (curr->val == val) {
+                prev->next = curr->next;
+                return head;
+            }
+            else {
+                prev = curr;
+                curr = curr->next;
+            }
+
+        }
+        return head;
+    }
+};
+
+//剑指 Offer 35. 复杂链表的复制
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+class Solution_jianzhi35 {
+public:
+    Node* copyRandomList(Node* head) {
+        if (head == NULL) return head;
+        map<Node*, Node*> mp_node;
+        Node* curr = head;
+        while (curr)
+        {
+            mp_node[curr] = new Node(curr->val);
+            curr = curr->next;
+        }
+        curr = head;
+        while (curr)
+        {
+            mp_node[curr]->next = mp_node[curr->next];
+            mp_node[curr]->random = mp_node[curr->random];
+            curr = curr->next;
+        }
+        return mp_node[head];
+    }
+};
+
+
+//剑指 Offer 30. 包含min函数的栈
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+ 
+    }
+
+    void push(int x) {
+        nodes.push(x);
+        if (min_nodes.empty() || x <= min_nodes.top()) {
+            min_nodes.push(x);
+        }
+    }
+
+    void pop() {
+        int top_node = nodes.top();
+        nodes.pop();
+        if (top_node == min_nodes.top()) {
+            min_nodes.pop();
+        }
+        return;
+    }
+
+    int top() {
+        return nodes.top();
+    }
+
+    int min() {
+        return min_nodes.top();
+    }
+private:
+    stack<int> nodes;
+    stack<int> min_nodes;
+
+};
+
