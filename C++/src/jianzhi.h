@@ -3,6 +3,7 @@
 #include<string>
 #include<sstream>
 #include<stack>
+#include<queue>
 
 //剑指 Offer 20. 表示数值的字符串
 class Solution_jianzhi20 {
@@ -212,6 +213,7 @@ public:
         random = NULL;
     }
 };
+
 class Solution_jianzhi35 {
 public:
     Node* copyRandomList(Node* head) {
@@ -233,7 +235,6 @@ public:
         return mp_node[head];
     }
 };
-
 
 //剑指 Offer 30. 包含min函数的栈
 class MinStack {
@@ -272,3 +273,184 @@ private:
 
 };
 
+class Node36 {
+public:
+    int val;
+    Node36* left;
+    Node36* right;
+
+    Node36() {}
+
+    Node36(int _val) {
+        val = _val;
+        left = NULL;
+        right = NULL;
+    }
+
+    Node36(int _val, Node36* _left, Node36* _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+
+class Solution_jianzhi36 {
+public:
+    vector<Node36*> v_nodes;
+    void helper(Node36* root) {
+        if (root == NULL) return;
+        helper(root->left);
+        v_nodes.push_back(root);
+        helper(root->right);
+        return;
+    }
+
+    Node36* treeToDoublyList(Node36* root) {
+        if (root == NULL) return root;
+        helper(root);
+        for (int i = 0; i < v_nodes.size() - 1; i++) {
+            v_nodes[i]->right = v_nodes[i + 1];
+            v_nodes[i + 1]->left = v_nodes[i];
+        }
+        v_nodes[0]->left = v_nodes[v_nodes.size() - 1];
+        v_nodes[v_nodes.size() - 1]->right = v_nodes[0];
+        return  v_nodes[0];
+    }
+};
+
+
+//剑指 Offer 31. 栈的压入、弹出序列
+class Solution_jianzhi31 {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        if (pushed.size() != popped.size()) return false;
+        if (pushed.empty()) return true;
+        stack<int> stk_nodes;
+        int j = 0;
+        for (int i = 0; i <= pushed.size(); i++) {
+            while (!stk_nodes.empty() && stk_nodes.top() == popped[j] && j < pushed.size())
+            {
+                j++;
+                stk_nodes.pop();
+            }
+            if(i < pushed.size())
+                stk_nodes.push(pushed[i]);
+        }
+        return stk_nodes.empty();
+    }
+};
+
+//剑指 Offer 38. 字符串的排列
+class Solution_jianzhi38 {
+public:
+    vector<string> ans;
+    void helper(string s, string& temp_ans, vector<bool>& flag, int idx) {
+        if (idx == s.size()) {
+            ans.push_back(temp_ans);
+            return;
+        }
+        for (int i = 0; i < s.size(); i++) {
+            if (flag[i]) continue;
+            else {
+                flag[i] = true;
+                temp_ans.push_back(s[i]);
+                helper(s, temp_ans, flag, idx + 1);
+                temp_ans.pop_back();
+                flag[i] = false;
+            }
+        }
+
+    }
+    vector<string> permutation(string s) {
+        if (s.empty()) return ans;
+        string temp = "";
+        vector<bool> flag(s.size(), false);
+        helper(s, temp, flag, 0);
+        set<string> ans_set(ans.begin(), ans.end());
+        vector<string > result(ans_set.begin(), ans_set.end());
+        return result;
+    }
+};
+
+
+//剑指 Offer 39. 数组中出现次数超过一半的数字
+class Solution_jianzhi39 {
+public:
+    int majorityElement(vector<int>& nums) {
+        vector<int> maj_nums;
+        maj_nums.push_back(nums[0]);
+        for (int i = 1; i < nums.size(); i++) {
+            if (maj_nums.empty()) maj_nums.push_back(nums[i]);
+            else {
+                if (nums[i] == maj_nums[0]) {
+                    maj_nums.push_back(nums[i]);
+                }
+                else {
+                    maj_nums.pop_back();
+                }
+            }
+        }
+        return maj_nums[0];
+    }
+};
+
+//剑指 Offer 32 - I. 从上到下打印二叉树
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+class Solution_jianzhi32_1 {
+public:
+    vector<int> levelOrder(TreeNode* root) {
+        vector<int> ans;
+        if (root == NULL) return ans;
+        queue<TreeNode*> node;
+        queue<TreeNode*> level_node;
+        node.push(root);
+        while (!node.empty())
+        {
+            vector<int> level_ans;
+            while (!node.empty())
+            {
+                TreeNode* curr = node.front();
+                node.pop();
+                level_ans.push_back(curr->val);
+                if (curr->left) level_node.push(curr->left);
+                if (curr->right) level_node.push(curr->right);
+            }
+            swap(level_node, node);
+            ans.insert(ans.end(), level_ans.begin(), level_ans.end());
+        }
+        return ans;
+    }
+};
+
+//剑指 Offer 32 - II. 从上到下打印二叉树 II
+class Solution_jianzhi32_2 {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if (root == NULL) return ans;
+        queue<TreeNode*> node;
+        queue<TreeNode*> level_node;
+        node.push(root);
+        while (!node.empty())
+        {
+            vector<int> level_ans;
+            while (!node.empty())
+            {
+                TreeNode* curr = node.front();
+                node.pop();
+                level_ans.push_back(curr->val);
+                if (curr->left) level_node.push(curr->left);
+                if (curr->right) level_node.push(curr->right);
+            }
+            swap(level_node, node);
+            ans.push_back(level_ans);
+        }
+        return ans;
+    }
+};

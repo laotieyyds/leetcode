@@ -367,3 +367,49 @@ public:
 private:
     vector<int> original_nums;
 };
+
+//838. Push Dominoes
+class Solution838 {
+public:
+    string pushDominoesLR(char& left, char& right, int len) {
+        string ans="";
+        if (len == 0) {
+            return ans;
+        }
+        if (left == 'L' && right == 'L') {
+            ans = string(len, 'L');
+        }
+        else if (left == 'R' && right == 'R') {
+            ans = string(len, 'R');
+        }
+        else if (left == 'L' && right == 'R') {
+            ans = "L" + string(len - 1, '.');
+        }
+        else {
+            if (len % 2 == 1) {
+                ans = string((len + 1) / 2, 'R') + string(len / 2, 'L');
+            }
+            else {
+                ans = string(len / 2, 'R') + "." + string((len-1) / 2, 'L');
+            }
+        }
+        return ans;
+    }
+    string pushDominoes(string dominoes) {
+        if (dominoes.empty()) return dominoes;
+        string ans = "";
+        dominoes.push_back('R');
+        char prev = 'L';
+        int prev_idx = -1;
+        for (int i = 0; i <= dominoes.size()-1; i++) {
+            if (dominoes[i] == '.') continue;
+            else {
+                ans +=pushDominoesLR(prev, dominoes[i], i - prev_idx);
+                prev = dominoes[i];
+                prev_idx = i;
+            }
+        }
+        return ans.substr(1, ans.size() - 1);
+    }
+};
+
