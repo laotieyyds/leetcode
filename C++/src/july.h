@@ -413,3 +413,28 @@ public:
     }
 };
 
+//915. Partition Array into Disjoint Intervals
+class Solution915 {
+public:
+    int partitionDisjoint(vector<int>& nums) {
+        int nums_len = nums.size();
+        int ans = -1;
+        vector<int> dp_max_min(nums.size(), nums[0]);
+        vector<int> dp_min_max(nums.size(), nums[nums_len-1]);
+        for (int i = 1; i < nums_len; i++) {
+            dp_max_min[i] = max(nums[i], dp_max_min[i - 1]);
+        }
+        for (int i = nums_len - 2; i >= 0; i--) {
+            dp_min_max[i] = min(nums[i], dp_min_max[i + 1]);
+        }
+
+        for (int i = 1; i < nums_len; i++) {
+            if (dp_max_min[i - 1] < dp_min_max[i]) {
+                ans = i;
+                break;
+            }
+        }
+        return ans;
+    }
+};
+

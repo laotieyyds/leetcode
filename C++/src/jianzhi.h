@@ -454,3 +454,157 @@ public:
         return ans;
     }
 };
+
+
+//剑指 Offer 44. 数字序列中某一位的数字
+class Solution_jianzhi44 {
+public:
+    int findNthDigit(int n) {
+        if (n < 10) return n;
+        int count = 9, digit = 1, start = 1;
+        while (n > count)
+        {
+            n -= count;
+            digit++;
+            start *= 10;
+            if (9 * digit > INT_MAX / start) break;
+            count = 9 * digit * start;
+        }
+        int num = start + (n-1) / digit;
+        string num_str = to_string(num);
+        return num_str[(n - 1) % digit] - '0';
+    }
+};
+
+//剑指 Offer 32 - III. 从上到下打印二叉树 III
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution_jianzhi32_3 {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if (root == NULL) return ans;
+        queue<TreeNode*> queue_node;
+        queue<TreeNode*> level_node;
+        queue_node.push(root);
+        vector<int> level_ans;
+        TreeNode* curr;
+        bool flag = true;
+        while (!queue_node.empty())
+        {
+            while (!queue_node.empty())
+            {
+                curr = queue_node.front();
+                queue_node.pop();
+                level_ans.push_back(curr->val);
+                if (curr->left) level_node.push(curr->left);
+                if (curr->right) level_node.push(curr->right);
+            }
+            if (!flag) {
+                flag = true;
+                reverse(level_ans.begin(), level_ans.end());
+            }
+            else {
+                flag = false;
+            }
+            swap(queue_node, level_node);
+            ans.push_back(level_ans);
+            level_ans.clear();
+        }
+        return ans;
+    }
+};
+
+//剑指 Offer 33. 二叉搜索树的后序遍历序列
+class Solution_jianzhi33 {
+public:
+    bool helper(vector<int>& postorder, int left, int right) {
+        if (left >= right) return true;
+        int root = postorder[right];
+        int idx = left;
+        for (; idx < right; idx++) {
+            if (postorder[idx] > root) {
+                break;
+            }
+        }
+        for (; idx < right; idx++) {
+            if (postorder[idx] < root) return false;
+        }
+        bool left_flag = helper(postorder, left, idx - 1);
+        bool right_flag = helper(postorder, idx, right - 1);
+        return left_flag && right_flag;
+    }
+
+    bool verifyPostorder(vector<int>& postorder) {
+        if (postorder.size() <= 1) return true;
+        return helper(postorder, 0, postorder.size() - 1);
+    }
+};
+
+//剑指 Offer 50. 第一个只出现一次的字符
+class Solution_jianzhi50 {
+public:
+    char firstUniqChar(string s) {
+        map<char, int> mp_s;
+        for (int i = 0; i < s.size(); i++) {
+            if (mp_s.find(s[i]) != mp_s.end()) {
+                mp_s[s[i]] = -1;
+
+            }
+            else {
+                mp_s[s[i]] = i;
+            }
+        }
+        int idx = 50001;
+        char ans = ' ';
+        for (auto iter : mp_s) {
+            if (iter.second < 0) continue;
+            if (iter.second < idx) {
+                idx = iter.second;
+                ans = iter.first;
+            }
+        }
+        return ans;
+    }
+};
+
+//剑指 Offer 34. 二叉树中和为某一值的路径
+class Solution {
+public:
+    vector<vector<int>> ans;
+    void helper(TreeNode* root, vector<int>& temp, int target) {
+        if (root == NULL) return;
+        if (root->val == target && root->left == NULL && root->right == NULL) {
+            temp.push_back(root->val);
+            ans.push_back(temp);
+            temp.pop_back();
+            return;
+        }
+        else {
+            temp.push_back(root->val);
+            helper(root->left, temp, target - root->val);
+            helper(root->right, temp, target - root->val);
+            temp.pop_back();
+            return;
+        }
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int target) {
+        vector<int> ans_temp;
+        helper(root, ans_temp, target);
+        return ans;
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int target) {
+        vector<int> ans_temp;
+        helper(root, ans_temp, target);
+        return ans;
+    }
+};

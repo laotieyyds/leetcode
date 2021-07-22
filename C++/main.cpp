@@ -72,9 +72,17 @@ int main() {
 	//Solution_jianzhi36 ex_jianzhi36;
 	//Node36* node1 = new Node36(1);
 	//Node36* ans = ex_jianzhi36.treeToDoublyList(node1);
-	Solution_jianzhi31 ex_jianzhi31;
-	vector<int> push{ 1,2,3,4,5 };
-	vector<int> pop{ 4,5,3,2,1 };
-	bool ans = ex_jianzhi31.validateStackSequences(push, pop);
+	//Solution_jianzhi31 ex_jianzhi31;
+	//vector<int> push{ 1,2,3,4,5 };
+	//vector<int> pop{ 4,5,3,2,1 };
+	//bool ans = ex_jianzhi31.validateStackSequences(push, pop);
+	//Solution915 ex_915;
+	//vector<int> nums{ 5,0,3,8,6 };
+	//int ans = ex_915.partitionDisjoint(nums);
+	//Solution_jianzhi44 ex_44;
+	//int ans = ex_44.findNthDigit(10);
+	Solution_jianzhi50 ex_50;
+	string s = "leetcode";
+	char ans = ex_50.firstUniqChar(s);
 	system("pause");
 }
