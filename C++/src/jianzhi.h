@@ -4,6 +4,8 @@
 #include<sstream>
 #include<stack>
 #include<queue>
+#include "common.h"
+using namespace std;
 
 //剑指 Offer 20. 表示数值的字符串
 class Solution_jianzhi20 {
@@ -394,13 +396,6 @@ public:
     }
 };
 
-//剑指 Offer 32 - I. 从上到下打印二叉树
-struct TreeNode {
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 
 class Solution_jianzhi32_1 {
 public:
@@ -576,9 +571,10 @@ public:
 };
 
 //剑指 Offer 34. 二叉树中和为某一值的路径
-class Solution {
+class Solution_jianzhi34 {
 public:
     vector<vector<int>> ans;
+
     void helper(TreeNode* root, vector<int>& temp, int target) {
         if (root == NULL) return;
         if (root->val == target && root->left == NULL && root->right == NULL) {
@@ -601,10 +597,47 @@ public:
         helper(root, ans_temp, target);
         return ans;
     }
+};
 
-    vector<vector<int>> pathSum(TreeNode* root, int target) {
-        vector<int> ans_temp;
-        helper(root, ans_temp, target);
+//剑指 Offer 56 - I. 数组中数字出现的次数
+class Solution_jianzhi56_1 {
+public:
+    vector<int> singleNumbers(vector<int>& nums) {
+        int ret = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            ret ^= nums[i];
+        }
+        int target = 1;
+        while ((target & ret) == 0)
+        {
+            target = target << 1;
+        }
+        int a = 0, b = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if ((target & nums[i]) > 0) {
+                a ^= nums[i];
+            }
+            else {
+                b ^= nums[i];
+            }
+        }
+        return { a, b };
+    }
+};
+
+//剑指 Offer 56 - II. 数组中数字出现的次数 II
+
+class Solution_jianzhi56_2 {
+public:
+    int singleNumber(vector<int>& nums) {
+        int ans = 0;
+        for (int i = 0; i < 32; i++) {
+            int sum = 0;
+            for (auto& item : nums) {
+                sum += (item >> i) & 1;
+            }
+            ans |= (sum % 3) << i;
+        }
         return ans;
     }
 };

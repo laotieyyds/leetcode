@@ -2,7 +2,7 @@
 #include "july.h"
 #include<iostream>
 #include "jianzhi.h"
-
+#include "common.h"
 using namespace std;
 int main() {
 	//Solution89 ex_89;
@@ -81,8 +81,11 @@ int main() {
 	//int ans = ex_915.partitionDisjoint(nums);
 	//Solution_jianzhi44 ex_44;
 	//int ans = ex_44.findNthDigit(10);
-	Solution_jianzhi50 ex_50;
-	string s = "leetcode";
-	char ans = ex_50.firstUniqChar(s);
+	//Solution_jianzhi50 ex_50;
+	//string s = "leetcode";
+	//char ans = ex_50.firstUniqChar(s
+	Solution_jianzhi56_2 ex_56_1;
+	vector<int> nums{ 9,1,7,9,7,9,7 };
+	int ans = ex_56_1.singleNumber(nums);
 	system("pause");
 }

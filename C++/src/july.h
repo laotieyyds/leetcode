@@ -4,16 +4,8 @@
 #include<algorithm>
 #include<string>
 #include<map>
+#include "common.h"
 using namespace std;
-
-struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode* next) : val(x), next(next) {}
-
-};
 
 //89 Gray Code
 class Solution89 {
@@ -435,6 +427,25 @@ public:
             }
         }
         return ans;
+    }
+};
+
+//814. Binary Tree Pruning
+class Solution_814 {
+public:
+    bool helper(TreeNode* root) {
+        if (root == NULL) return true;
+        if (root->val == 1) return false;
+        bool left = helper(root->left);
+        bool right = helper(root->right);
+        return left && right;
+    }
+
+    TreeNode* pruneTree(TreeNode* root) {
+        if (helper(root)) return NULL;
+        root->left = pruneTree(root->left);
+        root->right = pruneTree(root->right);
+        return root;
     }
 };
 
