@@ -641,3 +641,85 @@ public:
         return ans;
     }
 };
+
+//剑指 Offer 57. 和为s的两个数字
+class Solution_jianzhi57 {
+public:
+    /*
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> mp;
+        for (int i = 0; i < nums.size(); i++) {
+            if (mp.find(nums[i]) != mp.end()) {
+                return { nums[i], mp[nums[i]] };
+            }
+            else {
+                mp[target - nums[i]] = nums[i];
+            }
+        }
+        return {};
+    }
+    */
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1;
+        while (left < right)
+        {
+            int sum = nums[left] + nums[right];
+            if (sum == target) return { nums[left], nums[right] };
+            else if (sum > target) {
+                right--;
+            }
+            else {
+                left++;
+            }
+        }
+        return {};
+            
+    }
+
+};
+
+//剑指 Offer 68 - I. 二叉搜索树的最近公共祖先
+class Solution68_1 {
+public:
+    TreeNode* helper(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root->val == p->val || root->val == q->val) return root;
+        if (root->val > p->val) {
+            if (root->val < q->val) return root;
+            else {
+                return helper(root->left, p, q);
+            }
+        }
+        else {
+            if (root->val > q->val) return root;
+            else {
+                return helper(root->right, p, q);
+            }
+        }
+    }
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (p == NULL) return q;
+        if (q == NULL) return p;
+        return helper(root, p, q);
+    }
+};
+
+//剑指 Offer 68 - II. 二叉树的最近公共祖先
+class Solution68_2 {
+public:
+    TreeNode* helper(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root == NULL) return NULL;
+        if (root->val == p->val || root->val == q->val) return root;
+        TreeNode* left = helper(root->left, p, q);
+        TreeNode* right = helper(root->right, p, q);
+        if (left != NULL && right != NULL) {
+            return root;
+        }
+        else {
+            return left == NULL ? right : left;
+        }
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return helper(root, p, q);
+    }
+};

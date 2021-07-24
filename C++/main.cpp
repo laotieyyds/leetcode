@@ -84,8 +84,13 @@ int main() {
 	//Solution_jianzhi50 ex_50;
 	//string s = "leetcode";
 	//char ans = ex_50.firstUniqChar(s
-	Solution_jianzhi56_2 ex_56_1;
-	vector<int> nums{ 9,1,7,9,7,9,7 };
-	int ans = ex_56_1.singleNumber(nums);
+	//Solution_jianzhi56_2 ex_56_1;
+	//vector<int> nums{ 9,1,7,9,7,9,7 };
+	//int ans = ex_56_1.singleNumber(nums);
+	Solution_126 ex_126;
+	string begin = "red";
+	string end = "tax";
+	vector<string> wordLists = {"ted","tex","red","tax","tad","den","rex","pee"};
+	vector<vector<string>>  ans = ex_126.findLadders(begin, end, wordLists);
 	system("pause");
 }

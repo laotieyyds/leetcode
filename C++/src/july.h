@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<string>
 #include<map>
+#include<queue>
 #include "common.h"
 using namespace std;
 
@@ -449,3 +450,191 @@ public:
     }
 };
 
+//127. Word Ladder
+class Solution127 {
+public:
+
+    bool oneCharDiff(const string& a_str, const string& b_str) {
+        int ret = 0;
+        if (a_str.size() != b_str.size()) return false;
+        for (int i = 0; i < a_str.size() && ret < 2; i++) {
+            if (a_str[i] != b_str[i]) ret++;
+        }
+        return ret == 1;
+    }
+
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        if (beginWord == endWord) return 1;
+        bool flag = false;
+        for (auto& item : wordList) {
+            if (item == endWord) flag = true;
+        }
+        if (!flag) return 0;
+        map<string, vector<string>> cannect_mp;
+        wordList.push_back(beginWord);
+        for (int i = 0; i < wordList.size(); i++) {
+            vector<string> temp;
+            for (int j = 0; j < wordList.size(); j++) {
+                if (wordList[i] != wordList[j] && oneCharDiff(wordList[i], wordList[j])) {
+                    temp.push_back(wordList[j]);
+                }
+            }
+            cannect_mp[wordList[i]] = temp;
+        }
+
+        queue<string> q;
+        q.push(beginWord);
+        int q_len = q.size();
+        int ans = 1;
+        while (!q.empty())
+        {
+            ans++;
+            queue<string> level_q;
+            while (!q.empty()) {
+                string pre_str = q.front();
+                q.pop();
+                if (cannect_mp.find(pre_str) != cannect_mp.end()) {
+                    vector<string> temp_strs = cannect_mp[pre_str];
+                    for (auto& item : temp_strs) {
+                        if (item == endWord) return ans;
+                        else {
+                            level_q.push(item);
+                        }
+                    }
+                    cannect_mp.erase(pre_str);
+                }
+            }
+            swap(q, level_q);
+        }
+        return 0;
+    }
+};
+//126 Word Ladder II
+
+class Solution_126 {
+public:
+    vector<vector<string>> result;
+    void helper(map<string, vector<string>> connect_mp, vector<string>& ans,
+        string beginWord, string endWord) {
+        if (beginWord == endWord) {
+            ans.push_back(beginWord);
+            result.push_back(ans);
+            ans.pop_back();
+            return;
+        }
+        if (connect_mp.find(beginWord) != connect_mp.end()) {
+            vector<string> begin_corr_strs = connect_mp[beginWord];
+            connect_mp.erase(beginWord);
+            ans.push_back(beginWord);
+            for (auto& item : begin_corr_strs) {
+                helper(connect_mp, ans, item, endWord);
+            }
+            ans.pop_back();
+        }
+        return;
+    }
+
+    bool oneCharDiff(const string& a_str, const string& b_str) {
+        int ret = 0;
+        if (a_str.size() != b_str.size()) return false;
+        for (int i = 0; i < a_str.size() && ret < 2; i++) {
+            if (a_str[i] != b_str[i]) ret++;
+        }
+        return ret == 1;
+    }
+
+    vector<vector<string>> findLadders(string beginWord,
+        string endWord, vector<string>& wordList) {
+
+        if (beginWord == endWord) return { {beginWord} };
+        bool flag = false;
+        for (auto& item : wordList) {
+            if (item == beginWord) flag = true;
+        }
+        if (!flag)wordList.push_back(beginWord);
+        flag = false;
+        for (auto& item : wordList) {
+            if (item == endWord) flag = true;
+        }
+        if (!flag) return result;
+        map<string, vector<string>> cannect_mp;
+
+        for (int i = 0; i < wordList.size(); i++) {
+            vector<string> temp;
+            for (int j = 0; j < wordList.size(); j++) {
+                if (wordList[i] != wordList[j] && oneCharDiff(wordList[i], wordList[j])) {
+                    temp.push_back(wordList[j]);
+                }
+            }
+            cannect_mp[wordList[i]] = temp;
+        }
+
+        /*
+        // DFS
+        vector<string> ans;
+        helper(cannect_mp, ans, beginWord, endWord);
+        int shortest = INT_MAX;
+        for (int i = 0; i < result.size(); i++) {
+            if (shortest > result[i].size()) {
+                shortest = result[i].size();
+            }
+        }
+        vector<vector<string>> shortest_result;
+        for (int i = 0; i < result.size(); i++) {
+            if (shortest == result[i].size()) {
+                shortest_result.push_back(result[i]);
+            }
+        }
+        return shortest_result;
+        */
+        vector<vector<string>> str_pathes{ { {beginWord} } };
+        vector<vector<string>> str_level_pathes;
+        vector<vector<string>> result;
+        bool isThisLevel = false;
+        while (true)
+        {
+            vector<string> erase_node;
+            for (auto item : str_pathes) {
+                string node = item[item.size() - 1];
+                if (cannect_mp.find(node) != cannect_mp.end()) {
+                    erase_node.push_back(node);
+                    vector<string> node_strs = cannect_mp[node];
+                    for (auto& node_str : node_strs) {
+                        if (node_str == endWord) {
+                            isThisLevel = true;
+                            vector<string> temp = item;
+                            temp.push_back(node_str);
+                            str_level_pathes.push_back(temp);
+                        }
+                        else {
+                            vector<string> temp = item;
+                            temp.push_back(node_str);
+                            str_level_pathes.push_back(temp);
+                        }
+                    }
+                }
+            }
+            for (auto node : erase_node) {
+                cannect_mp.erase(node);
+            }
+            if (isThisLevel) {
+                int len = str_level_pathes[0].size();
+                for (int i = 0; i < str_level_pathes.size(); i++) {
+                    if (str_level_pathes[i][len - 1] == endWord) {
+                        result.push_back(str_level_pathes[i]);
+                    }
+                }
+                return result;
+            }
+            if (str_level_pathes == str_pathes) break;
+            else {
+                swap(str_level_pathes, str_pathes);
+                str_level_pathes.clear();
+            }
+        }
+        return { };
+    }
+};
+
+
+  
