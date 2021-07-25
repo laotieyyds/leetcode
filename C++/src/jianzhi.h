@@ -723,3 +723,196 @@ public:
         return helper(root, p, q);
     }
 };
+
+//剑指 Offer 57 - II. 和为s的连续正数序列
+class Solution_57_2 {
+public:
+    vector<int> geneAns(int target, int num_len, int begin) {
+        vector<int> result;
+        while (num_len--)
+        {
+            result.push_back(begin++);
+        }
+        return result;
+    }
+
+    vector<vector<int>> findContinuousSequence(int target) {
+        int max = sqrt(2 * target);
+        vector<vector<int>> ans;
+        for (int i = max; i >= 2; i--) {
+            if (i % 2 == 1) {
+                if (target % i != 0) continue;
+                else {
+                    ans.push_back(geneAns(target, i, target / i - i / 2));
+                }
+            }
+            else {
+                if (target % i != i / 2) continue;
+                else {
+                    ans.push_back(geneAns(target, i, target / i - i / 2 + 1));
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+//剑指 Offer 52. 两个链表的第一个公共节点
+class Solution_jianzhi52 {
+public:
+    int ListLen(ListNode* head) {
+        int len = 0;
+        while (head)
+        {
+            len++;
+            head = head->next;
+        }
+        return len;
+    }
+
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        if (NULL == headA || NULL == headB) return NULL;
+        int a_len = ListLen(headA);
+        int b_len = ListLen(headB);
+        if (a_len < b_len) {
+            swap(headA, headB);
+            swap(a_len, b_len);
+        }
+        while ((a_len - b_len) > 0)
+        {
+            a_len--;
+            headA = headA->next;
+        }
+        while (headA && headB)
+        {
+            if (headA == headB) return headA;
+            else {
+                headA = headA->next;
+                headB = headB->next;
+            }
+        }
+        return NULL;
+    }
+};
+
+//剑指 Offer 58 - I. 翻转单词顺序
+class Solution_jianzhi58_1 {
+public:
+    string reverseWords(string s) {
+        istringstream iss(s);
+        vector<string> strs;
+        string word;
+        while (getline(iss, word, ' '))
+        {
+            if (word.empty()) continue;
+            strs.push_back(word);
+        }
+        reverse(strs.begin(), strs.end());
+        string ans = "";
+        for (auto word_i : strs) {
+            ans += word_i + " ";
+        }
+        return ans.substr(0, ans.size() - 1);
+    }
+};
+
+
+//剑指 Offer 47. 礼物的最大价值
+class Solution_jianzhi47 {
+public:
+    int maxValue(vector<vector<int>>& grid) {
+        if (grid.empty()) return 0;
+        int row = grid.size(), col = grid[0].size();
+        vector<vector<int>> dp(row, vector<int>(col, 0));
+        dp[0][0] = grid[0][0];
+        for (int i = 1; i < row; i++) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+        for (int i = 1; i < col; i++) {
+            dp[0][i] = dp[0][i - 1] + grid[0][i];
+        }
+        for (int i = 1; i < row; i++) {
+            for (int j = 1; j < col; j++) {
+                dp[i][j] = grid[i][j] + max(dp[i - 1][j], dp[i][j - 1]);
+            }   
+        }
+        return dp[row - 1][col - 1];
+    }
+};
+
+//剑指 Offer 53 - I. 在排序数组中查找数字 I
+class Solution_jianzhi53 {
+public:
+    int search_right(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        while (left < right)
+        {
+            int mid = (left + right + 1) / 2;
+            if (nums[mid] > target) {
+                right = mid - 1;
+            }
+            else {
+                left = mid;
+            }
+        }
+        return nums[right] == target ? right : -1;
+    }
+
+
+    int search_left(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        while (left < right)
+        {
+            int mid = (left + right) / 2;
+            if (nums[mid] >= target) {
+                right = mid;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return nums[left] == target ? left : -1;
+    }
+
+    int search(vector<int>& nums, int target) {
+        int left = search_left(nums, target);
+        int right = search_right(nums, target);
+        if (left >= 0 && right >= 0 && right>=left) {
+            return right - left + 1;
+        }
+        else {
+            return 0;
+        }
+    }
+};
+
+//剑指 Offer 53 - II. 0～n-1中缺失的数字
+class Solution_53_2 {
+public:
+    int missingNumber(vector<int>& nums) {
+        int left = 0, right = nums.size() - 1;
+        int mid;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (nums[mid] <= mid) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+};
+
+//剑指 Offer 58 - II. 左旋转字符串
+class Solution_58_2 {
+public:
+    string reverseLeftWords(string s, int n) {
+        if (n == 0 || n == s.size()) return s;
+        n = n % s.size();
+        return s.substr(n - 1, s.size() - n) + s.substr(0, n);
+    }
+};

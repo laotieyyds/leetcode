@@ -509,8 +509,8 @@ public:
         return 0;
     }
 };
-//126 Word Ladder II
 
+//126 Word Ladder II
 class Solution_126 {
 public:
     vector<vector<string>> result;
@@ -636,5 +636,42 @@ public:
     }
 };
 
+//Non-negative Integers without Consecutive Ones
+class Solution_600 {
+public:
+    bool isConsecutiveOnes(int n) {
+        while (n)
+        {
+            if (((n >> 1) & 1) && (n  & 1)) {
+                return true;
+            }
+            n = n >> 1;
+        }
+        return false;
+    }
+    
+    int findNums(int n, int i, int sum, bool prev) {
+        if (sum > n) return 0;
+        if (1 << i > n) return 1;
+        if (prev) {
+            return  findNums(n, i + 1, sum, false);
+        }
+        else {
+            return findNums(n, i + 1, sum, false) + findNums(n, i + 1, sum + (1 << i), true);
+        }
+    }
 
-  
+    int findIntegers(int n) {
+        return findNums(n, 0, 0, false);
+        /*
+        //±©Á¦·½·¨
+        int ans = 0;
+        for (int i = 0; i <= n; i++) {
+            if (!isConsecutiveOnes(i)) ans++;           
+        }
+        return ans;
+        */
+    }
+
+
+};

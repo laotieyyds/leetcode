@@ -3,6 +3,7 @@
 #include<iostream>
 #include "jianzhi.h"
 #include "common.h"
+#include "paixu.h"
 using namespace std;
 int main() {
 	//Solution89 ex_89;
@@ -87,10 +88,36 @@ int main() {
 	//Solution_jianzhi56_2 ex_56_1;
 	//vector<int> nums{ 9,1,7,9,7,9,7 };
 	//int ans = ex_56_1.singleNumber(nums);
-	Solution_126 ex_126;
-	string begin = "red";
-	string end = "tax";
-	vector<string> wordLists = {"ted","tex","red","tax","tad","den","rex","pee"};
-	vector<vector<string>>  ans = ex_126.findLadders(begin, end, wordLists);
+	//Solution_126 ex_126;
+	//string begin = "red";
+	//string end = "tax";
+	//vector<string> wordLists = {"ted","tex","red","tax","tad","den","rex","pee"};
+	//vector<vector<string>>  ans = ex_126.findLadders(begin, end, wordLists);
+	//ListNode* node_1 = new ListNode(4);
+	//ListNode* node_2 = new ListNode(1);
+	//ListNode* node_3 = new ListNode(8);
+	//ListNode* node_4 = new ListNode(4);
+	//ListNode* node_5 = new ListNode(5);
+	//ListNode* node_6 = new ListNode(5);
+	//ListNode* node_7 = new ListNode(0);
+	//ListNode* node_8 = new ListNode(1);
+	//node_1->next = node_2;
+	//node_2->next = node_3;
+	//node_3->next = node_4;
+	//node_4->next = node_5;
+	//node_6->next = node_7;
+	//node_7->next = node_8;
+	//node_8->next = node_3;
+
+	//Solution_jianzhi52 ex_52;
+	//ListNode* ans = ex_52.getIntersectionNode(node_1, node_6);
+	//Solution_jianzhi58_1 ex_58;
+	//string strs = "the sky is blue";
+	//string ans = ex_58.reverseWords(strs);
+	//Solution_600 ex_600;
+	//bool ans = ex_600.isConsecutiveOnes(3);
+	Sort my_sort;
+	vector<int> nums{ 10,11,1,2,3,4,5,6,7,8,9 };
+	my_sort.QuickSort(nums);
 	system("pause");
 }
