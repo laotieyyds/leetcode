@@ -116,8 +116,13 @@ int main() {
 	//string ans = ex_58.reverseWords(strs);
 	//Solution_600 ex_600;
 	//bool ans = ex_600.isConsecutiveOnes(3);
-	Sort my_sort;
-	vector<int> nums{ 10,11,1,2,3,4,5,6,7,8,9 };
-	my_sort.QuickSort(nums);
+	//Sort my_sort;
+	//vector<int> nums{ 10,11,1,2,3,4,5,6,7,8,9 };
+	//my_sort.HeapSort(nums);
+MedianFinder mid_fd;
+mid_fd.addNum(-1);
+mid_fd.addNum(-2);
+mid_fd.addNum(-3);
+double ans = mid_fd.findMedian();
 	system("pause");
 }

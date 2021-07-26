@@ -472,15 +472,6 @@ public:
 };
 
 //剑指 Offer 32 - III. 从上到下打印二叉树 III
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Solution_jianzhi32_3 {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
@@ -889,7 +880,7 @@ public:
 };
 
 //剑指 Offer 53 - II. 0～n-1中缺失的数字
-class Solution_53_2 {
+class Solution_jianzhi53_2 {
 public:
     int missingNumber(vector<int>& nums) {
         int left = 0, right = nums.size() - 1;
@@ -908,7 +899,7 @@ public:
 };
 
 //剑指 Offer 58 - II. 左旋转字符串
-class Solution_58_2 {
+class Solution_jianzhi58_2 {
 public:
     string reverseLeftWords(string s, int n) {
         if (n == 0 || n == s.size()) return s;
@@ -916,3 +907,74 @@ public:
         return s.substr(n - 1, s.size() - n) + s.substr(0, n);
     }
 };
+
+//剑指 Offer 40. 最小的k个数
+class Solution_jianzhi40 {
+public:
+
+    void quicksort(vector<int>& nums, int left, int right) {
+        if (left >= right) return;
+        int lo = left, hi = right;
+        int pivot = nums[left];
+        while (left < right)
+        {
+            while (left < right && nums[right] >= pivot)
+            {
+                right--;
+            }
+            nums[left] = nums[right];
+            while (left < right && nums[left] <= pivot)
+            {
+                left++;
+            }
+            nums[right] = nums[left];
+        }
+        nums[left] = pivot;
+        int index = left;
+        quicksort(nums, lo, index - 1);
+        quicksort(nums, index + 1, hi);
+    }
+
+    vector<int> getLeastNumbers(vector<int>& arr, int k) {
+        vector<int> ans;
+        if (arr.empty()) return ans;
+        quicksort(arr, 0, arr.size() - 1);
+        ans.insert(ans.end(), arr.begin(), arr.begin() + k);
+        return ans;
+    }
+};
+
+
+//剑指 Offer 41. 数据流中的中位数
+class MedianFinder {
+public:
+    /** initialize your data structure here. */
+    priority_queue<int, vector<int>, less<int>> queue_a;
+    priority_queue<int, vector<int>, greater<int>> queue_b;
+
+    MedianFinder() {
+    }
+
+    void addNum(int num) {
+        if (queue_a.size() == queue_b.size()) {
+            queue_b.push(num);
+            int top = queue_b.top();
+            queue_b.pop();
+            queue_a.push(top);
+        }
+        else {
+            queue_a.push(num);
+            int top = queue_a.top();
+            queue_a.pop();
+            queue_b.push(top);
+        }
+    }
+
+    double findMedian() {
+        if (queue_a.size() == queue_b.size()) {
+            return (queue_a.top() + queue_b.top()) / 2.0;
+        }
+        return queue_a.size() > queue_b.size() ? queue_a.top() : queue_b.top();
+    }
+};
+
