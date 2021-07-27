@@ -119,10 +119,17 @@ int main() {
 	//Sort my_sort;
 	//vector<int> nums{ 10,11,1,2,3,4,5,6,7,8,9 };
 	//my_sort.HeapSort(nums);
-MedianFinder mid_fd;
-mid_fd.addNum(-1);
-mid_fd.addNum(-2);
-mid_fd.addNum(-3);
-double ans = mid_fd.findMedian();
+//MedianFinder mid_fd;
+//mid_fd.addNum(-1);
+//mid_fd.addNum(-2);
+//mid_fd.addNum(-3);
+//double ans = mid_fd.findMedian();
+//Solution_jianzhi48 ex_48;
+//string s = "pwwkew";
+//int ans = ex_48.lengthOfLongestSubstring(s);
+Solution_16 ex_16;
+vector<int> nums{ 1,1,1,1 };
+int target = -100;
+int ans = ex_16.threeSumClosest(nums, target);
 	system("pause");
 }

@@ -101,46 +101,6 @@ public:
     }
 };
 
-//295. Find Median from Data Stream
-class MedianFinder {
-public:
-    /** initialize your data structure here. */
-    vector<int> nums;
-    MedianFinder() {
-
-    }
-
-    void addNum(int num) {
-        if (nums.empty()) {
-            nums.push_back(num);
-            return;
-        };
-        if (num >= nums[nums.size() - 1]) {
-            nums.push_back(num);
-            return;
-        }
-        for (auto iter = nums.begin(); iter != nums.end(); ++iter) {
-            if (num < *iter) {
-                iter;
-                nums.insert(iter, num);
-                return;
-            }
-        }
-        return;
-    }
-
-    double findMedian() {
-        double ans;
-        sort(nums.begin(), nums.end());
-        if (nums.size() % 2 == 1) {
-            ans = nums[nums.size() / 2];
-        }
-        else {
-            ans = (double(nums[nums.size() / 2]) + double(nums[(nums.size() - 1) / 2])) / 2;
-        }
-        return ans;
-    }
-};
 
 //205 Isomorphic Strings
 class Solution205 {
@@ -674,4 +634,31 @@ public:
     }
 
 
+};
+
+//16 3Sum Closest
+class Solution_16 {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int i = 0, left, right;
+        int closest_sum = 100000;
+        while (i <= nums.size()-3)
+        {
+            left = i + 1;
+            right = nums.size() - 1;
+            while (left < right)
+            {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (abs(sum - target) < abs(closest_sum - target)) {
+                    closest_sum = sum;
+                }
+                if (sum < target) left++;
+                else if (sum == target) return sum;
+                else right--;
+            }
+            i++;
+        }
+        return closest_sum;
+    }
 };

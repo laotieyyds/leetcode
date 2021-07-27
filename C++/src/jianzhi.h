@@ -160,7 +160,6 @@ public:
     }
 };
 
-
 //剑指 Offer 24. 反转链表
 class Solution_jianzhi24 {
 public:
@@ -320,7 +319,6 @@ public:
     }
 };
 
-
 //剑指 Offer 31. 栈的压入、弹出序列
 class Solution_jianzhi31 {
 public:
@@ -374,7 +372,6 @@ public:
     }
 };
 
-
 //剑指 Offer 39. 数组中出现次数超过一半的数字
 class Solution_jianzhi39 {
 public:
@@ -395,7 +392,6 @@ public:
         return maj_nums[0];
     }
 };
-
 
 class Solution_jianzhi32_1 {
 public:
@@ -944,7 +940,6 @@ public:
     }
 };
 
-
 //剑指 Offer 41. 数据流中的中位数
 class MedianFinder {
 public:
@@ -978,3 +973,79 @@ public:
     }
 };
 
+//剑指 Offer 48. 最长不含重复字符的子字符串
+class Solution_jianzhi48 {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int left = 0, right = 0;
+        int max_len = 0;
+        vector<int> dp(256, 0);
+        while (left <= right && right < s.size())
+        {
+            dp[s[right] - 'a']++;
+            if (dp[s[right] - 'a'] < 2) {
+                right++;
+                if (right - left > max_len) {
+                    max_len = right - left;
+                }
+            }
+            else {
+                while (dp[s[right] - 'a'] >= 2)
+                {
+                    dp[s[left++]- 'a']--;
+                }
+                right++;
+            }
+        }
+        return max_len;
+    }
+};
+
+//剑指 Offer 54. 二叉搜索树的第k大节点
+class Solution_jianzhi54 {
+public:
+    int ans = -1;
+    void helper(TreeNode* root, int& count, int k) {
+        if (root == NULL) return;
+        helper(root->right, count, k);
+        if (count == k) {
+            ans = root->val;
+        }
+        count++;
+        helper(root->left, count, k);
+        return;
+    }
+
+    int kthLargest(TreeNode* root, int k) {
+        int count = 1;
+        helper(root, count, k);
+        return ans;
+    }
+};
+
+//剑指 Offer 49. 丑数
+class Solution_jianzhi49 {
+public:
+    int nthUglyNumber(int n) {
+        priority_queue<int, vector<int>, greater<int>> heap;
+        set<int> seen;
+        heap.push(1);
+        seen.insert(1);
+        vector<int> factors{ 2,3,5 };
+        int n_ugly = -1;
+        for (int i = 1; i <= n; i++)
+        {
+            int curr = heap.top();
+            n_ugly = curr;
+            heap.pop();
+            for (auto& item : factors) {
+                if (curr > INT_MAX / item) continue;
+                if (!seen.count(curr * item)) {
+                    seen.insert(curr * item);
+                    heap.push(curr * item);
+                }
+            }
+        }
+        return n_ugly;
+    }
+};
