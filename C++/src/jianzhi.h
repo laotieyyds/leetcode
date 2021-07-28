@@ -1049,3 +1049,41 @@ public:
         return n_ugly;
     }
 };
+
+//剑指 Offer 65. 不用加减乘除做加法
+class Solution_jianzhi65 {
+public:
+    int add(int a, int b) {
+        while (b != 0)
+        {
+            int c = ((unsigned int)(a & b)) << 1;
+            a ^= b;
+            b = c;
+        }
+        return a;
+    }
+};
+
+//剑指 Offer 59 - I. 滑动窗口的最大值
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        
+        if (k > nums.size()) k = nums.size();
+        int ans_len = nums.size() - k + 1;
+        vector<int> ans;
+        priority_queue<vector<int>, int, less<int>> heap;
+        for (int i = 0; i < k; i++) {
+            heap.push(nums[i]);
+        }
+        ans.push_back(heap.top());
+        int left = 0, right = k - 1;
+        while ( right < nums.size())
+        {
+            
+        }
+        
+    }
+};
+
+
