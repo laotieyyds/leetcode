@@ -1065,25 +1065,157 @@ public:
 };
 
 //剑指 Offer 59 - I. 滑动窗口的最大值
-class Solution {
+class Solution_jianzhi59 {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        
-        if (k > nums.size()) k = nums.size();
-        int ans_len = nums.size() - k + 1;
         vector<int> ans;
-        priority_queue<vector<int>, int, less<int>> heap;
+        if (nums.empty() || k <= 0) return ans;
+        priority_queue<pair<int, int>> heap;
         for (int i = 0; i < k; i++) {
-            heap.push(nums[i]);
+            heap.push({ nums[i], i });
         }
-        ans.push_back(heap.top());
-        int left = 0, right = k - 1;
-        while ( right < nums.size())
-        {
-            
+        ans.push_back(heap.top().first);
+        for (int i = k; i < nums.size(); i++) {
+            heap.push({ nums[i], i });
+            while (heap.top().second <= i - k) {
+                heap.pop();
+            }
+            ans.push_back(heap.top().first);
         }
-        
+        return ans;
+
     }
 };
+
+// 剑指 Offer 63. 股票的最大利润
+class Solution_jianzhi63 {
+public:
+    int maxProfit(vector<int>& prices) {
+        if (prices.empty()) return 0;
+        int min_price = prices[0];
+        int max_profit = 0;
+        for (int i = 1; i < prices.size(); i++) 
+        {
+            max_profit = max(max_profit, prices[i] - min_price);
+            min_price = min(prices[i], min_price);
+        }
+        return max_profit;
+    }
+};
+
+//剑指 Offer 60. n个骰子的点数
+class Solution_jianzhi60 {
+public:
+    vector<double> dicesProbability(int n) {
+        vector <double> probability(6, 1.0 / 6.0);
+        vector<double> ans(6, 1.0 / 6.0);
+        if (n <= 1) return ans;
+        for (int i = 2; i <= n; i++) 
+        {
+            vector<double> ans_temp(5*i+1, 0);
+            for (int m = 0; m < ans.size(); m++) {
+                for (int n = 0; n < 6; n++) {
+                    ans_temp[m + n] += ans[m] * probability[n];
+                }
+            }
+            swap(ans, ans_temp);
+        }
+        return ans;
+    }
+};
+
+//剑指 Offer 67. 把字符串转换成整数
+class Solution_jianzhi67 {
+public:
+
+    string DeletePreSpace(const string& str) {
+        string ans = "";
+        if (str.empty()) return ans;
+        for (int i = 0; i < str.size(); i++) {
+            if (str[i] != ' ') {
+                ans = str.substr(i, str.size() - i);
+                break;
+            }
+        }
+        return ans;
+    }
+    int GetIntStr(const string& str) {
+        int result = 0;
+        string ans = "";
+        string str_copy = str;
+        if (str.empty()) return result;
+        bool is_neg = false;
+        if (str[0] == '-' || str[0] == '+') {
+            if (str.size() <= 1) return result;
+            if (str[1] < '0' || str[1] > '9') return result;
+            if (str[0] == '-') is_neg = true;
+            str_copy = str_copy.substr(1, str.size() - 1);
+        }
+        else {
+            if (str[0] < '0' || str[0] > '9') return result;
+        }
+        for (int i = 0; i < str_copy.size(); i++) {
+            if (str_copy[i] < '0' || str_copy[i] > '9') {
+                str_copy = str_copy.substr(0, i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < str_copy.size(); i++) {
+            if (str_copy[i] == '0' && i == str_copy.size() - 1) {
+                return 0;
+            }
+            if(str_copy[i] != '0'){
+                str_copy = str_copy.substr(i, str_copy.size() - i);
+                break;
+            }
+        }
+        ans = str_copy;
+        int len = ans.size();
+        if (len > 10) {
+            if (is_neg) return INT_MIN;
+            else return INT_MAX;
+        }
+        if (len == 10) {
+            if (is_neg && ans >= "2147483648") return INT_MIN;
+            if (ans >= "2147483648") return INT_MAX;
+        }
+        for (int i = len - 1; i >= 0; i--) {
+            result += (ans[i] - '0') * pow(10, len - i - 1);
+        }
+        if (is_neg) result = -result;
+        return result;
+    }
+
+    int strToInt(string str) {
+        string str_del_pre_space = DeletePreSpace(str);
+        int ans = GetIntStr(str_del_pre_space);
+        return ans;
+    }
+};
+
+//剑指 Offer 61. 扑克牌中的顺子
+class Solution_jianzhi61 {
+public:
+    bool isStraight(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int count_zero = 0;
+        for (auto item : nums) {
+            if (item == 0) count_zero++;
+        }
+        if (count_zero >= 4) return true;
+        int zeros = count_zero;
+        int pre_num = nums[zeros];
+        for (int i = count_zero + 1; i < nums.size(); i++) {
+            if (nums[i] == pre_num) return false;
+            zeros = zeros - (nums[i] - pre_num - 1);
+            if (zeros < 0) return false;
+            pre_num = nums[i];
+        }
+        return true;
+    }
+};
+
+
 
 

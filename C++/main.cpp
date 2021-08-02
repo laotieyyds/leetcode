@@ -127,9 +127,14 @@ int main() {
 //Solution_jianzhi48 ex_48;
 //string s = "pwwkew";
 //int ans = ex_48.lengthOfLongestSubstring(s);
-Solution_16 ex_16;
-vector<int> nums{ 1,1,1,1 };
-int target = -100;
-int ans = ex_16.threeSumClosest(nums, target);
+//Solution_16 ex_16;
+//vector<int> nums{ 1,1,1,1 };
+//int target = -100;
+//int ans = ex_16.threeSumClosest(nums, target);
+//Solution_jianzhi60 ex_60;
+//vector<double> ans = ex_60.dicesProbability(1);
+Solution_jianzhi67 ex_67;
+string nums = "  0000000000012345678";
+int ans = ex_67.strToInt(nums);
 	system("pause");
 }
