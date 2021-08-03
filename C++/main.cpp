@@ -5,6 +5,7 @@
 #include "common.h"
 #include "paixu.h"
 #include "dynamic_programming.h"
+#include "aug.h"
 using namespace std;
 int main() {
 	//Solution89 ex_89;
@@ -134,8 +135,11 @@ int main() {
 	//int ans = ex_16.threeSumClosest(nums, target);
 	//Solution_jianzhi60 ex_60;
 	//vector<double> ans = ex_60.dicesProbability(1);
-	Solution_jianzhi67 ex_67;
-	string nums = "  0000000000012345678";
-	int ans = ex_67.strToInt(nums);
+	//Solution_jianzhi67 ex_67;
+	//string nums = "  0000000000012345678";
+	//int ans = ex_67.strToInt(nums);
+	Solution_jianzhi51 ex_51;
+	vector<int> nums{ 7,5,6,4 };
+	int ans = ex_51.reversePairs(nums);
 	system("pause");
 }

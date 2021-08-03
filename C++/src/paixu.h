@@ -74,6 +74,45 @@ public:
 		return;
 	}
 
+	//merge sort
+	int ans_ = 0;
+	vector<int> temp_;
+	void Merge(vector<int>& nums, int left, int mid, int right) {
+		int pos1 = left;
+		int pos2 = mid + 1;
+		int pos3 = left;
+		while (pos1 <= mid && pos2 <= right)
+		{
+			if (nums[pos1] <= nums[pos2]) temp_[pos3++] = nums[pos1++];
+			else {
+				temp_[pos3++] = nums[pos2++];
+				ans_ += mid - pos1 + 1;
+			}
+		}
+		while (pos1 <= mid)
+		{
+			temp_[pos3++] = nums[pos1++];
+		}
+		while (pos2 <= right)
+		{
+			temp_[pos3++] = nums[pos2++];
+		}
+		for (int i = left; i <= right; i++) {
+			nums[i] = temp_[i];
+		}
+		return;
+	}
+	void MergeSort(vector<int>& nums, int left, int right) {
+		if (left >= right) return;
+		int mid = (left + right) >> 1;
+		MergeSort(nums, left, mid);
+		MergeSort(nums, mid + 1, right);
+		Merge(nums, left, mid, right);
+	}
+	void MergeSort(vector<int>& nums) {
+		MergeSort(nums, 0, nums.size() - 1);
+		return;
+	}
 private:
 
 };

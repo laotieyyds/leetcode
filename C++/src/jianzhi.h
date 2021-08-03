@@ -4,6 +4,7 @@
 #include<sstream>
 #include<stack>
 #include<queue>
+#include<deque>
 #include "common.h"
 using namespace std;
 
@@ -1215,6 +1216,89 @@ public:
         return true;
     }
 };
+
+//剑指 Offer 59 - II. 队列的最大值
+class MaxQueue {
+public:
+    queue<int> que_;
+    deque<int> due_;
+    MaxQueue() {
+
+    }
+
+    int max_value() {
+        if (due_.empty()) {
+            return -1;
+        }
+        return due_.front();
+    }
+
+    void push_back(int value) {
+        while (!due_.empty() && due_.back() < value) {
+            due_.pop_back();
+        }
+        due_.push_back(value);
+        que_.push(value);
+    }
+
+    int pop_front() {
+        if (que_.empty()) return -1;
+        int ans = que_.front();
+        if (ans == due_.front()) {
+            due_.pop_front();
+        }
+        que_.pop();
+        return ans;
+    }
+};
+
+//剑指 Offer 51. 数组中的逆序对
+class Solution_jianzhi51 {
+public:
+    int ans_ = 0;
+    vector<int> temp_;
+    void Merge(vector<int>& nums, int left, int mid, int right) {
+        int pos1 = left;
+        int pos2 = mid + 1;
+        int pos3 = left;
+        while (pos1<=mid && pos2<=right)
+        {
+            if (nums[pos1] <= nums[pos2]) temp_[pos3++] = nums[pos1++];
+            else {
+                temp_[pos3++] = nums[pos2++];
+                ans_ += mid - pos1 + 1;
+            }
+        }
+        while (pos1 <= mid)
+        {
+            temp_[pos3++] = nums[pos1++];
+        }
+        while (pos2 <= right)
+        {
+            temp_[pos3++] = nums[pos2++];
+        }
+        for (int i = left; i <= right; i++) {
+            nums[i] = temp_[i];
+        }
+        return;
+    }
+
+    void Sort(vector<int>& nums, int left, int right) {
+        if (left >= right) return;
+        int mid = (left + right) >> 1;
+        Sort(nums, left, mid);
+        Sort(nums, mid + 1, right);
+        Merge(nums, left, mid, right);
+    }
+
+
+    int reversePairs(vector<int>& nums) {
+        temp_.resize(nums.size());
+        Sort(nums, 0, nums.size() - 1);
+        return ans_;
+    } 
+};
+
 
 
 
