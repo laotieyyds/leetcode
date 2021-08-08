@@ -105,4 +105,98 @@ namespace dynamic_programming {
             return min_path_sum;
         }
     };
+    //516：最长回文子序列
+    class Solution_516 {
+    public:
+        int longestPalindromeSubseq(string s) {
+            if (s.empty()) return 0;
+            vector<vector<int>> dp(s.size(), vector<int>(s.size(), 0));
+            for (int i = 0; i < s.size(); i++) {
+                dp[i][i] = 1;
+            }
+            for (int i = s.size() - 1; i >= 0; i--)
+            {
+                for (int j = i + 1; j < s.size(); j++) {
+                    if (s[i] == s[j]) dp[i][j] = dp[i + 1][j - 1] + 2;
+                    else
+                    {
+                        dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+                    }
+                }
+            }
+            return dp[0][s.size() - 1];
+        }
+    };
+
+    //1143 最长公共子序列
+    class Solution_1143 {
+    public:
+        int longestCommonSubsequence(string text1, string text2) {
+            if (text1.empty() || text2.empty()) return 0;
+            vector<vector<int>> dp(text1.size(), vector<int>(text2.size(), 0));
+            int rows = text1.size(), cols = text2.size();
+            if (text1[0] == text2[0]) dp[0][0] = 1;
+            for (int i = 1; i < cols; i++) {
+                if (text1[0] == text2[i]) dp[0][i] = 1;
+                else dp[0][i] = dp[0][i - 1];
+            }
+            for (int i = 1; i < rows; i++) {
+                if (text1[i] == text2[0]) dp[i][0] = 1;
+                else dp[i][0] = dp[i - 1][0];
+            }
+            for (int i = 1; i < rows; i++) {
+                for (int j = 1; j < cols; j++) {
+                    if (text1[i] == text2[j]) dp[i][j] = dp[i - 1][j - 1] + 1;
+                    else {
+                        dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+                    }
+                }
+            }
+            return dp[rows - 1][cols - 1];
+        }
+    };
+
+    //300. 最长递增子序列
+    class Solution_300 {
+    public:
+        int lengthOfLIS(vector<int>& nums) {
+            if (nums.empty()) return 0;
+            int n_len = nums.size();
+            vector<int> dp(n_len, 1);
+            int ans = 1;
+            for (int i = 1; i < n_len; i++) {
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] > nums[j]) dp[i] = max(dp[j] + 1, dp[i]);
+                }
+                ans = max(ans, dp[i]);
+            }
+            return ans;
+        }
+    };
+
+    //354:俄罗斯套娃信封问题
+    class Solution_354 {
+    public:
+        static bool cmp(vector<int>& a, vector<int>& b) {
+            return a[0] < b[0];
+        }
+
+        int maxEnvelopes(vector<vector<int>>& envelopes) {
+            if (envelopes.empty()) return 0;
+            sort(envelopes.begin(), envelopes.end(), cmp);
+            int ans = 1;
+            int n_envelope = envelopes.size();
+            vector<int> dp(n_envelope, 1);
+            for (int i = 1; i < n_envelope; i++) {
+                for (int j = 0; j < i; j++) {
+                    if (envelopes[i][0] > envelopes[j][0] && envelopes[i][1] > envelopes[j][1])
+                    {
+                        dp[i] = max(dp[i], dp[j] + 1);
+                    }
+                }
+                ans = max(ans, dp[i]);
+            }
+            return ans;
+        }
+    };
 }
