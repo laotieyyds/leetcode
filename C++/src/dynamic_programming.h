@@ -72,4 +72,37 @@ namespace dynamic_programming {
             return ans;
         }
     };
+
+    //931. 下降路径最小和
+    class Solution_931 {
+    public:
+        int minFallingPathSum(vector<vector<int>>& matrix) {
+            if (matrix.empty()) return 0;
+            vector<vector<int>> dp(matrix.size(), vector<int>(matrix[0].size(), 0));
+            int rows = matrix.size();
+            int cols = matrix[0].size();
+            int min_path_sum = INT_MAX;
+            for (int i = 0; i < cols; i++) {
+                dp[0][i] = matrix[0][i];
+                if (rows == 1) min_path_sum = min(min_path_sum, dp[0][i]);
+            }
+
+            for (int i = 1; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (j == 0) {
+                        dp[i][j] = min(dp[i - 1][j], dp[i - 1][j + 1]) + matrix[i][j];
+                    }
+                    else if (j == cols - 1)
+                    {
+                        dp[i][j] = min(dp[i - 1][j - 1], dp[i - 1][j]) + matrix[i][j];
+                    }
+                    else {
+                        dp[i][j] = min(min(dp[i - 1][j - 1], dp[i - 1][j]), dp[i - 1][j + 1]) + matrix[i][j];
+                    }
+                    if (i == rows - 1) min_path_sum = min(min_path_sum, dp[i][j]);
+                }
+            }
+            return min_path_sum;
+        }
+    };
 }

@@ -45,4 +45,59 @@ namespace aug {
         }
     };
 
+    // 113 Path Sum II
+    class Solution_113 {
+    public:
+        vector<vector<int>> ans;
+        void helper(TreeNode* root, vector<int>& temp, int targetSum) {
+            if (root == NULL) return;
+            if (root->val == targetSum && root->left == NULL && root->right == NULL) {
+                temp.push_back(root->val);
+                ans.push_back(temp);
+                temp.pop_back();
+                return;
+            }
+            temp.push_back(root->val);
+            helper(root->left, temp, targetSum - root->val);
+            helper(root->right, temp, targetSum - root->val);
+            temp.pop_back();
+            return;
+        }
+
+
+        vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+            vector<int> temp;
+            helper(root, temp, targetSum);
+            return ans;
+        }
+    };
+
+//429. N-ary Tree Level Order Traversal
+    class Solution_429 {
+    public:
+        vector<vector<int>> levelOrder(NrayNode* root) {
+            if (root == NULL) return {};
+            queue<NrayNode*> n_ray_node_que;
+            n_ray_node_que.push(root);
+
+            vector<vector<int>> ans;
+            while (!n_ray_node_que.empty()) {
+                vector<int> level_ans;
+                queue<NrayNode*> n_ray_node_level_que;
+                while (!n_ray_node_que.empty()) {
+                    NrayNode* curr = n_ray_node_que.front();
+                    n_ray_node_que.pop();
+                    //cout << curr->val<< " ";                    
+                    level_ans.push_back(curr->val);
+                    for (auto item : curr->children) {
+                        n_ray_node_level_que.push(item);
+                    }
+                }
+                //cout<<endl;
+                ans.push_back(level_ans);
+                swap(n_ray_node_que, n_ray_node_level_que);
+            }
+            return ans;
+        }
+    };
 }

@@ -15,3 +15,22 @@ struct ListNode {
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 
 };
+
+
+// Definition for a Node.
+class NrayNode {
+public:
+    int val;
+    vector<NrayNode*> children;
+
+    NrayNode() {}
+
+    NrayNode(int _val) {
+        val = _val;
+    }
+
+    NrayNode(int _val, vector<NrayNode*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
