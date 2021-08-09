@@ -101,9 +101,8 @@ namespace aug {
         }
     };
 
-
     //1137. 第 N 个泰波那契数
-class Solution_1137 {
+    class Solution_1137 {
 public:
     int tribonacci(int n) {
         if (n == 0) return 0;
@@ -119,4 +118,62 @@ public:
         return ans;
     }
 };
+
+    //415 字符串相加
+    class Solution_415 {
+    public:
+        string addStrings(string num1, string num2) {
+            int n1_len = num1.size(), n2_len = num2.size();
+            string ans;
+            int p1 = n1_len - 1, p2 = n2_len - 1;
+            int flag = 0;
+            while (p1 >= 0 && p2 >= 0)
+            {
+                int add_item = (num1[p1--] - '0') + (num2[p2--] - '0') + flag;
+                flag = add_item / 10;
+                ans.push_back((add_item % 10 + '0'));
+            }
+            while (p1 >= 0)
+            {
+                int add_item = (num1[p1--] - '0') + flag;
+                flag = add_item / 10;
+                ans.push_back((add_item % 10 + '0'));
+            }
+            while (p2 >= 0)
+            {
+                int add_item = (num2[p2--] - '0') + flag;
+                flag = add_item / 10;
+                ans.push_back((add_item % 10 + '0'));
+            }
+            if (flag > 0) ans.push_back((flag + '0'));
+            reverse(ans.begin(), ans.end());
+            return ans;
+        }
+    };
+
+    //超级丑数
+    class Solution_313 {
+    public:
+        int nthSuperUglyNumber(int n, vector<int>& primes) {
+            priority_queue<int, vector<int>, greater<int>> p_queue;
+            set<int> seen;
+            p_queue.push(1);
+            seen.insert(1);
+            int ugly_num = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                ugly_num = p_queue.top();
+                int curr = ugly_num;
+                p_queue.pop();
+                for (auto item : primes) {
+                    if (item > INT_MAX / curr) continue;
+                    if (!seen.count(item * curr)) {
+                        p_queue.push(item * curr);
+                        seen.insert(item * curr);
+                    }
+                }
+            }
+            return ugly_num;
+        }
+    };
 }

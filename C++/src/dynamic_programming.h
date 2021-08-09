@@ -105,6 +105,7 @@ namespace dynamic_programming {
             return min_path_sum;
         }
     };
+
     //516：最长回文子序列
     class Solution_516 {
     public:
@@ -197,6 +198,58 @@ namespace dynamic_programming {
                 ans = max(ans, dp[i]);
             }
             return ans;
+        }
+    };
+
+    //72 编辑距离
+    class Solution_72 {
+    public:
+        int minDistance(string word1, string word2) {
+            vector<vector<int>> dp(word1.size() + 1, vector<int>(word2.size() + 1, 0));
+            for (int i = 0; i <= word1.size(); i++) {
+                dp[i][0] = i;
+            }
+            for (int j = 0; j <= word2.size(); j++) {
+                dp[0][j] = j;
+            }
+            for (int i = 1; i <= word1.size(); i++) {
+                for (int j = 1; j <= word2.size(); j++) {
+                    if (word1[i - 1] == word2[j - 1]) dp[i][j] = dp[i - 1][j - 1];
+                    else
+                    {
+                        dp[i][j] = min(min(dp[i - 1][j - 1] + 1, dp[i][j - 1] + 1), dp[i - 1][j] + 1);
+                    }
+                }
+            }
+            return dp[word1.size()][word2.size()];
+        }
+    };
+
+    //416. 分割等和子集
+    class Solution {
+    public:
+        bool canPartition(vector<int>& nums) {
+            int sum = 0;
+            int n_len = nums.size();
+            for (int i = 0; i < n_len; i++) sum += nums[i];
+            if (sum % 2 == 1) return false;
+            sum /= 2;
+            vector<vector<bool>> dp(n_len + 1, vector<bool>(sum + 1, false));
+            for (int i = 0; i <= n_len; i++) {
+                dp[i][0] = true;
+            }
+
+            for (int i = 1; i <= n_len; i++) {
+                for (int j = 0; j <= sum; j++) {
+                    if (j < nums[i - 1]) {
+                        dp[i][j] = dp[i - 1][j];
+                    }
+                    else {
+                        dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                    }
+                }
+            }
+            return dp[n_len][sum];
         }
     };
 }
