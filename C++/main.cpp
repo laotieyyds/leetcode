@@ -138,8 +138,11 @@ int main() {
 	//Solution_jianzhi67 ex_67;
 	//string nums = "  0000000000012345678";
 	//int ans = ex_67.strToInt(nums);
-	Solution_jianzhi51 ex_51;
-	vector<int> nums{ 7,5,6,4 };
-	int ans = ex_51.reversePairs(nums);
+	//Solution_jianzhi51 ex_51;
+	//vector<int> nums{ 7,5,6,4 };
+	//int ans = ex_51.reversePairs(nums);
+	aug::Solution954 ex_954;
+	vector<int> nums{ 2,1,2,1,1,1,2,2 };
+	bool result = ex_954.canReorderDoubled(nums);
 	system("pause");
 }

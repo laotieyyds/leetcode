@@ -18,6 +18,7 @@ struct ListNode {
 
 
 // Definition for a Node.
+/*
 class NrayNode {
 public:
     int val;
@@ -34,3 +35,4 @@ public:
         children = _children;
     }
 };
+*/

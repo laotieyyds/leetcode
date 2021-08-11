@@ -1,5 +1,6 @@
 #pragma once
-
+#include<map>
+#include<unordered_map>
 namespace aug {
     //90. Subsets II
     class Solution_90 {
@@ -73,6 +74,7 @@ namespace aug {
     };
 
 //429. N-ary Tree Level Order Traversal
+    /*
     class Solution_429 {
     public:
         vector<vector<int>> levelOrder(NrayNode* root) {
@@ -100,7 +102,7 @@ namespace aug {
             return ans;
         }
     };
-
+    */
     //1137. 第 N 个泰波那契数
     class Solution_1137 {
 public:
@@ -176,4 +178,30 @@ public:
             return ugly_num;
         }
     };
+
+    //954. 二倍数对数组
+    class Solution954 {
+    public:
+        static bool cmp(int a, int b) {
+            return abs(a) < abs(b);
+        }
+        bool canReorderDoubled(vector<int>& arr) {
+            unordered_map<int, int>mp;
+            //按照绝对值从小到大排序
+            sort(arr.begin(), arr.end(), cmp);
+            for (auto x : arr) {
+                mp[x]++;
+            }
+            for (auto x : arr) {
+                if (mp[x] == 0) continue;
+                else if (mp[2 * x] <= 0) return false;
+                else {
+                    mp[x]--;
+                    mp[2 * x]--;
+                }
+            }
+            return true;
+        }
+    };
+
 }
