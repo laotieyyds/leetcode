@@ -204,4 +204,73 @@ public:
         }
     };
 
+    //76 Minimum Window Substring
+    class Solution_76 {
+    public:
+        string minWindow(string s, string t) {
+            string ans = "";
+            if (s.empty() || t.empty()) return ans;
+            map<char, int> t_char_mp;
+            map<char, int> win_char_map;
+            for (auto item : t) {
+                t_char_mp[item]++;
+            }
+
+            int left = 0;
+            int right = 0;
+            int valid = 0;
+            int min_win_len = INT_MAX;
+            int start = -1;
+            while (right < s.size())
+            {
+                char temp = s[right];
+                right++;
+                if (t_char_mp.count(temp)) {
+                    win_char_map[temp]++;
+                    if (win_char_map[temp] == t_char_mp[temp]) {
+                        valid++;
+                    }
+                }
+                while (valid == t_char_mp.size()) {
+                    if (right - left <= min_win_len) {
+                        min_win_len = right - left;
+                        start = left;
+                    }
+                    char left_char = s[left];
+                    left++;
+                    if (t_char_mp.count(left_char)) {
+                        win_char_map[left_char]--;
+                        if (win_char_map[left_char] < t_char_mp[left_char]) {
+                            valid--;
+                        }
+                    }
+                }
+            }
+            return min_win_len == INT_MAX ? "" : s.substr(start, min_win_len);
+        }
+    };
+
+    //303 Range Sum Query - Immutable
+    class NumArray {
+    public:
+        NumArray(vector<int>& nums) {
+            arr.clear();
+            arr.insert(arr.end(), nums.begin(), nums.end());
+        }
+
+        int sumRange(int left, int right) {
+            int ans = 0;
+            for (int i = left; i <= right && i < arr.size(); i++) {
+                ans += arr[i];
+            }
+            return ans;
+        }
+        vector<int> arr;
+    };
+
+    /**
+     * Your NumArray object will be instantiated and called as such:
+     * NumArray* obj = new NumArray(nums);
+     * int param_1 = obj->sumRange(left,right);
+     */
 }
