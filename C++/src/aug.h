@@ -273,4 +273,24 @@ public:
      * NumArray* obj = new NumArray(nums);
      * int param_1 = obj->sumRange(left,right);
      */
+
+
+    //91 Decode Ways
+    class Solution91 {
+    public:
+        int numDecodings(string s) {
+            vector<int> dp(s.size() + 1, 0);
+            dp[0] = 1;
+            dp[1] = s[0] == '0' ? 0 : 1;
+            for (int i = 2; i <= s.size(); i++) {
+                if (s[i] != '0') dp[i] += dp[i - 1];
+                if (s[i - 1] == '1') dp[i] += dp[i - 2];
+                if (s[i - 1] == '2' && s[i] <= '6') {
+                    cout << "add" << endl;
+                    dp[i] += dp[i - 2];
+                }
+            }
+            return dp[s.size()];
+        }
+    };
 }
