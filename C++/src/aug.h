@@ -273,8 +273,6 @@ public:
      * NumArray* obj = new NumArray(nums);
      * int param_1 = obj->sumRange(left,right);
      */
-
-
     //91 Decode Ways
     class Solution91 {
     public:
@@ -291,6 +289,20 @@ public:
                 }
             }
             return dp[s.size()];
+        }
+    };
+
+    //633 Sum of Square Numbers
+    class Solution633 {
+    public:
+        bool judgeSquareSum(int c) {
+            int sqrt_c = sqrt(c);
+            if (sqrt_c * sqrt_c == c) return true;
+            for (int i = 1; i <= sqrt_c; i++) {
+                int sqrt_b = sqrt(c - i * i);
+                if ((i * i + sqrt_b * sqrt_b) == c) return true;
+            }
+            return false;
         }
     };
 }
