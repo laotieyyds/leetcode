@@ -1,6 +1,7 @@
 #pragma once
 #include<map>
 #include<unordered_map>
+#include<algorithm>
 namespace aug {
     //90. Subsets II
     class Solution_90 {
@@ -305,4 +306,20 @@ public:
             return false;
         }
     };
+
+    //
+    class Solution {
+    public:
+    int maxCount(int m, int n, vector<vector<int>>& ops) {
+        int rows = INT_MAX;
+        int cols = INT_MAX;
+        for (int i = 0; i < ops.size(); i++) {
+            rows = min(rows, ops[i][0]);
+            cols = min(cols, ops[i][1]);
+        }
+        rows = min(rows, m);
+        cols = min(cols, n);
+        return rows * cols;
+    }
+};
 }
