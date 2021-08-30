@@ -1,0 +1,29 @@
+class Solution:
+    """
+    @param s: input string
+    @return: a string as the longest palindromic substring
+    """
+    def longestPalindrome(self, s):
+        # write your code here
+        if s == None:
+            return
+
+        res = ""
+        for mid in range(len(s)):
+            temp = self.tempLongest(s, mid, mid)
+            if len(temp) > len(res):
+                res = temp
+            temp = self.tempLongest(s, mid, mid+1)
+            if len(temp) > len(res):
+                res = temp
+
+        return res
+
+    def tempLongest(self, s, left, right):
+        res = ""
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            res = s[left : right+1]
+            left -= 1
+            right += 1
+        
+        return res
