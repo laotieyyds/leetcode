@@ -308,7 +308,7 @@ public:
     };
 
     //
-    class Solution {
+    class Solution598 {
     public:
     int maxCount(int m, int n, vector<vector<int>>& ops) {
         int rows = INT_MAX;
@@ -321,5 +321,25 @@ public:
         cols = min(cols, n);
         return rows * cols;
     }
+    //1109. ∫Ω∞‡‘§∂©Õ≥º∆
+    class Solution1109 {
+    public:
+        vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
+            vector<int> ans(n, 0);
+            for (int i = 0; i < bookings.size(); i++) {
+                int first = bookings[i][0];
+                int last = bookings[i][1];
+                ans[first - 1] += bookings[i][2];
+                if (last >= n) continue;
+                ans[last] -= bookings[i][2];
+            }
+            for (int i = 1; i < n; i++) {
+                ans[i] += ans[i - 1];
+            }
+            return ans;
+        }
+    };
+
+
 };
 }

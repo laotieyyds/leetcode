@@ -6,6 +6,7 @@
 #include "paixu.h"
 #include "dynamic_programming.h"
 #include "aug.h"
+#include "leetcode_hot100.h"
 using namespace std;
 int main() {
 	//Solution89 ex_89;
@@ -141,8 +142,18 @@ int main() {
 	//Solution_jianzhi51 ex_51;
 	//vector<int> nums{ 7,5,6,4 };
 	//int ans = ex_51.reversePairs(nums);
-	aug::Solution954 ex_954;
-	vector<int> nums{ 2,1,2,1,1,1,2,2 };
-	bool result = ex_954.canReorderDoubled(nums);
+	//aug::Solution954 ex_954;
+	//vector<int> nums{ 2,1,2,1,1,1,2,2 };
+	//bool result = ex_954.canReorderDoubled(nums);
+	//aug::Solution91 ex_91;
+	//string s = "226";
+	//int ans = ex_91.numDecodings(s);
+	//aug::Solution633 ex_633;
+	//int x = 2;
+	//bool ans = ex_633.judgeSquareSum(2
+int a = 5, b = 1;
+int c = a & b;
+
+	
 	system("pause");
 }
