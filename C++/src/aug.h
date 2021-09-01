@@ -342,4 +342,26 @@ public:
 
 
 };
+
+    //438. 找到字符串中所有字母异位词
+    class Solution {
+        public:
+        vector<int> findAnagrams(string s, string p) {
+            vector<int> ans;
+            vector<int> mp_p(26, 0);
+            vector<int> mp_win_s(26, 0);
+            for (int i = 0; i < p.size(); i++) {
+                mp_p[p[i] - 'a']++;
+            }
+            int left = 0, right = 0;
+            for(; right<s.size(); right++){
+                mp_win_s[s[right] - 'a']++;
+                if (right >= p.size()) mp_win_s[s[left++] - 'a']--;
+                if (mp_win_s == mp_p) {
+                    ans.push_back(left);
+                }
+            }
+            return ans;
+        }
+    };
 }
