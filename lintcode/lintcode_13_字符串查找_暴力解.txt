@@ -1,0 +1,24 @@
+class Solution:
+    """
+    @param source: 
+    @param target: 
+    @return: return the index
+    """
+    def strStr(self, source, target):
+        # Write your code here
+        if source == None or target == None:
+            return -1
+        if len(source) < len(target):
+            return -1
+
+        for head in range(len(source) - len(target) + 1):
+            check = True
+            for i in range(len(target)):
+                if source[head + i] == target[i]:
+                    continue
+                else:
+                    check = False
+                    break
+            if check == True:
+                return head
+        return -1  
