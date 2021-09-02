@@ -1,0 +1,31 @@
+class Solution:
+    """
+    @param source: 
+    @param target: 
+    @return: return the index
+    """
+    def strStr(self, source, target):
+        # Write your code here
+        if len(source) < len(target):
+            return -1
+        if target =="":
+            return 0
+        
+        targetHash = self.hashcode(target)
+        for i in range(len(source) - len(target) + 1):
+            if self.hashcode(source[i : i + len(target)]) == targetHash:
+                flag = True
+                for j in range(len(target)):
+                    if target[j] != source[i + j]:
+                        flag == False
+                        break
+                if flag == True:
+                    return i            
+        return -1
+
+    def hashcode(self, word):
+        mod = 99999
+        res = 0
+        for ch in word:
+            res = (res * 26 + ord(ch) - ord('a')) % mod        
+        return res
