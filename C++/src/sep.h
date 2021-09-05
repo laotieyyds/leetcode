@@ -68,4 +68,20 @@ namespace sep {
 		}
 	};
 
+	//470. ÓÃ Rand7() ÊµÏÖ Rand10()
+	class Solution470 {
+	public:
+		int rand7() {
+			return 1 + rand() % 7;
+		}
+		int rand10() {
+			int a;
+			while (true) {
+				a = (rand7() - 1) * 7 + rand7();
+				if (a <= 40) break;
+			}
+			return a % 10 + 1;
+		}
+	};
+
 }
