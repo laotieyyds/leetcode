@@ -8,6 +8,54 @@
 #include "common.h"
 using namespace std;
 
+namespace jianzhioffer {
+    class Solution04 {
+    public:
+        bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+            if (matrix.empty()) return false;
+            int n = matrix.size();
+            int m = matrix[0].size();
+            int row = 0, col = m - 1;
+            while (row < n && col >= 0) {
+                while (row < n && col >= 0) {
+                    if (matrix[row][col] == target) return true;
+                    else if (matrix[row][col] > target) col--;
+                    else {
+                        break;
+                    }
+                }
+                row++;
+            }
+            return false;
+        }
+    };
+    class Solution11 {
+    public:
+        int minArray(vector<int>& numbers) {
+            if (numbers.size() == 0) return numbers[0];
+            int left = 0, right = numbers.size() - 1;
+            int mid;
+            while (left < right)
+            {
+                mid = (left + right) >> 1;
+                if (numbers[mid] > numbers[right]) {
+                    left = mid + 1;
+                }
+                else if (numbers[mid] == numbers[right]) {
+                    right--;
+                }
+                else {
+                    right = mid;
+                }
+            }
+            return numbers[left];
+        }
+    };
+
+
+}
+
+
 //剑指 Offer 20. 表示数值的字符串
 class Solution_jianzhi20 {
 public:
