@@ -83,5 +83,40 @@ namespace sep {
 			return a % 10 + 1;
 		}
 	};
+	class Solution1239 {
+	public:
+		int ans_ = 0;
+		bool HasRepeatChar(const string& temp) {
+			vector<int> char_count(26, 0);
+			for (auto& item : temp) {
+				char_count[item - 'a']++;
+				if (char_count[item - 'a'] >= 2) return true;
+			}
+			return false;
+		}
 
+		void Helper(vector<string>& arr, int idx, string& temp) {
+			if (idx > arr.size()) return;
+			int len = temp.size();
+			if (idx == arr.size() && !HasRepeatChar(temp)) {
+				ans_ = max(ans_, len);
+				return;
+			}
+			if (HasRepeatChar(temp)) return;
+
+			ans_ = max(ans_, len);
+			temp += arr[idx];
+			Helper(arr, idx + 1, temp);
+			temp = temp.substr(0, temp.size() - arr[idx].size());
+			Helper(arr, idx + 1, temp);
+			return;
+		}
+
+
+		int maxLength(vector<string>& arr) {
+			string temp = "";
+			Helper(arr, 0, temp);
+			return ans_;
+		}
+	};
 }
